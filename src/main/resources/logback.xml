@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <property name="LOG_HOME" value="logs"/>
+    <appender name="FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%date{ISO8601} [%thread] %-5level [itoaService] [%logger{100}] [%file:%line] - %msg%n</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}\test.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <appender name="file-error"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%date{ISO8601} [%thread] %-5level [itoaService] [%logger{100}] [%file:%line] - %msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}\test.error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>10GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <logger name="logger.org.jdbcdslog.StatementLogger" level="WARNING"/>
+    <logger name="LogbackIntegrationIT" additivity="false" level="WARNING"/>
+    <logger name="application" level="INFO"/>
+    <logger name="com.zaxxer.hikari" level="DEBUG"/>
+    <logger name="slick.jdbc.JdbcBackend.statement" level="INFO" />
+    <logger name="akka.event.slf4j.Slf4jEventHandler" level="INFO" />
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="file-error"/>
+    </root>
+</configuration>
