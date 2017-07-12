@@ -55,21 +55,21 @@ class StudentService extends EntityTable with ServiceCommon {
   def updateStudent(req: StudentReq, sid: Long) = {
     val query = for {
       u <- students.filter(_.sid === sid)
-        .map(s => (s.sage, s.ssex))
-        .update((req.sage, req.ssex))
+        .map(s => (s.sage, s.ssex, s.address))
+        .update((req.sage, req.ssex, req.address))
       s <- students.filter(_.sid === sid).result.headOption
-    }yield s
+    } yield s
     db.run(query.asTry).map {
       case Success(s) =>
-        respSuccess(MsgCode.success, "创建成功", s)
+        respSuccess(MsgCode.success, "修改成功", s)
       case Failure(ex) =>
         logger.error("[DB Error]", ex)
         respFail(MsgCode.updateError, s"数据库操作失败,${ex.getMessage}")
     }
   }
 
-  def deleteStudent(sid:Long)={
-    db.run(students.filter(_.sid === sid).delete.asTry).map{
+  def deleteStudent(sid: Long) = {
+    db.run(students.filter(_.sid === sid).delete.asTry).map {
       case Success(s) =>
         respSuccess(MsgCode.success, "创建成功", None)
       case Failure(ex) =>

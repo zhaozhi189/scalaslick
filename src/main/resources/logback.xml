@@ -34,9 +34,10 @@
     <logger name="logger.org.jdbcdslog.StatementLogger" level="WARNING"/>
     <logger name="LogbackIntegrationIT" additivity="false" level="WARNING"/>
     <logger name="application" level="INFO"/>
-    <logger name="com.zaxxer.hikari" level="DEBUG"/>
-    <logger name="slick.jdbc.JdbcBackend.statement" level="INFO" />
-    <logger name="akka.event.slf4j.Slf4jEventHandler" level="INFO" />
+    <logger name="com.zaxxer.hikari" level="ERROR"/>
+    <logger name="slick.jdbc.JdbcBackend.statement" level="DEBUG"/>
+    <logger name="slick.jdbc.StatementInvoker.result" level="DEBUG"/>
+    <logger name="akka.event.slf4j.Slf4jLogger" level="INFO"/>
     <root level="INFO">
         <appender-ref ref="FILE"/>
         <appender-ref ref="file-error"/>

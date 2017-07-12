@@ -57,7 +57,7 @@ class TeacherService extends EntityTable with ServiceCommon {
     }yield t
     db.run(query.asTry).map {
       case Success(s) =>
-        respSuccess(MsgCode.success, "创建成功", s)
+        respSuccess(MsgCode.success, "修改成功", s)
       case Failure(ex) =>
         logger.error("[DB Error]", ex)
         respFail(MsgCode.updateError, s"数据库操作失败,${ex.getMessage}")
